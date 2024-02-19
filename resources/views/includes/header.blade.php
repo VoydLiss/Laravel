@@ -19,10 +19,10 @@
 			<div class="row">
 				<div class="col-12 col-md-6 col-xl-3 text-md-left">
 					<div class="logo">
-						<img src="{{ $logo }}" alt="" class="img-logo">
+						<img src="{{ $OrgInfo->logo }}" alt="" class="img-logo">
 						<a href="/">
 							<div href="/" class="name-s">локальная информационная система</div>
-							<div class="name-org"> {{ $nameOrg }}</div>
+							<div class="name-org"> {{ $OrgInfo->name }}</div>
 						</a>
 					</div>
 				</div>
@@ -46,8 +46,8 @@
 					<div class="top-usercard">
 						<button class="btn-usercard">
 							<i class="fa fa-user-circle-o"></i>
-							<div class="card-title">{{ $employeeName }} <span class="card-title-sub-editor">{{ $rights }}</span></div>
-							<i class="fa fa-sign-out"></i>
+							<div class="card-title">{{ $UserInfo['name'] }} <span class="card-title-sub-editor">{{ $UserInfo['rights'] }}</span></div>
+							<a href={{ route('logout') }}> <i class="fa fa-sign-out"></i> </a>
 						</button>
 					</div>
 				</div>

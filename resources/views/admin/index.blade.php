@@ -39,14 +39,15 @@
 	<!-- Main content -->
 	<section class="content">
 
-@yield('categories')
-@yield('create')
+		@yield('categories')
+		@yield('create')
+		@yield('users')
+		@yield('org')
 
-			<div class="card-footer">
-				{{-- {{ $categories->links() }} --}}
-			</div>
-			<!-- /.card-footer-->
-		<!-- /.card -->
+		<div class="card-footer">
+			{{-- {{ $categories->links() }} --}}
+		</div>
+
 	</section>
 	<!-- /.content -->
 	</div>

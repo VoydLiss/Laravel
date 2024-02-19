@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use App\Models\Org;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -22,7 +24,14 @@ class HomeController extends Controller
 		// $data = Country::all();
 		// dump("");
 
-		return view("home", ['logo' => null, 'nameOrg' => 'Название организации','employeeName'=> 'Фамилия И.О.', 'rights'=> 'права']);
-	}
+		//  $user = User::find($id);
+		$OrgInfo = Org::find(1);
 
+		$UserInfo = [
+			'name'=> Auth::user()->name,//'Фамилия И.О.',
+			'rights'=> !Auth::user()->is_admin ? "" : (Auth::user()->is_admin ? "администратор" : "редактор"),
+		];
+
+		return view("home", compact('OrgInfo', 'UserInfo'));
+	}
 }

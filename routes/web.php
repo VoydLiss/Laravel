@@ -25,8 +25,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 	Route::get('/', [MainController::class, 'index'])->name('admin.index');
 	Route::resource('/categories', "\App\Http\Controllers\Admin\CategoryController");
 	Route::resource('/posts', "\App\Http\Controllers\Admin\PostController");
-	Route::get('/register', [UserController::class,'create'])->name('register.create');
-	Route::post('/register', [UserController::class,'store'])->name('register.store');
+	Route::resource('/org', "\App\Http\Controllers\Admin\OrgController");
+	Route::resource('/register', "\App\Http\Controllers\UserController");
+
+	// Route::get('/register', [UserController::class,'create'])->name('register.create');
+	// Route::get('/register', [UserController::class,'index'])->name('register.index');
+	// Route::post('/register', [UserController::class,'store'])->name('register.store');
 	// Route::resource('/posts', PostController::class);
 });
 

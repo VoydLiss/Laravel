@@ -13,7 +13,7 @@
 </head>
 <body style="overflow: hidden">
 
-	@if ($errors->any())
+	{{-- @if ($errors->any())
 		<div class="alert alert-danger">
 			<ul class="list-unstyled">
 				@foreach ($errors->all() as $error)
@@ -21,13 +21,13 @@
 				@endforeach
 			</ul>
 		</div>
-	@endif
+	@endif --}}
 
-	@if (session()->has('error'))
+	{{-- @if (session()->has('error'))
 		<div class="alert alert-danger">
 			{{ session('error') }}
 		</div>
-	@endif
+	@endif --}}
 
 	<div class="container" id="auth-form">
 		<div class="row">

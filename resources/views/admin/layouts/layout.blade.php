@@ -8,6 +8,11 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 	<link rel="stylesheet" href="{{ asset('assets/admin/css/admin.css') }}">
+	<style>
+		.ck-editor__editable_inline {
+			min-height: 200px
+		}
+	</style>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -19,12 +24,6 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
       </li>
     </ul>
 
@@ -52,64 +51,6 @@
         </div>
       </li>
 
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{{ asset('assets/admin/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{{ asset('assets/admin/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{{ asset('assets/admin/img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
-      </li>
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -193,10 +134,27 @@
             </a>
           </li>
           <li class="nav-item">
-						<a href="{{ route('register.create') }}" class="nav-link">
+						<a href="#" class="nav-link">
 							<i class="nav-icon fas fa-users"></i>
-              <p>Пользователи</p>
+              <p>
+								Пользователи
+								<i class="right fas fa-angle-left"></i>
+							</p>
             </a>
+						<ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('register.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Список пользователей</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('register.create') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Добавить пользователя</p>
+                </a>
+              </li>
+            </ul>
           </li>
 					
 					<li class="nav-item">
@@ -246,6 +204,13 @@
               </li>
             </ul>
           </li>
+
+					<li class="nav-item">
+						<a href="{{ route('org.index') }}" class="nav-link">
+							<i class="nav-icon fas fa-id-card"></i>
+              <p>Об организации</p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -256,13 +221,6 @@
   <!-- Content Wrapper. Contains page content -->
 @yield('content')
   <!-- /.content-wrapper -->
-
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
-    </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -286,6 +244,30 @@
 		}
 	})
 
+</script>
+
+<script src="{{ asset('assets/admin/ckeditor5/build/ckeditor.js') }}"></script>
+<script src="{{ asset('assets/admin/ckfinder/ckfinder.js') }}"></script>
+
+<script>
+	ClassicEditor
+		.create( document.querySelector( '#content' ), {
+				ckfinder: {
+						uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+				}, // !НЕ ПОДКЛЮЧАЕТСЯ
+				toolbar: [ 'ckfinder', 'imageUpload', '|', 'heading', '|', 'bold', 'italic', '|', 'undo', 'redo' ]
+		} )
+		.catch( function( error ) {
+				console.error( error );
+		} );
+
+	ClassicEditor
+		.create( document.querySelector( '#description' ), {
+				toolbar: ['heading', '|', 'bold', 'italic', '|', 'undo', 'redo' ]
+		} )
+		.catch( function( error ) {
+				console.error( error );
+		} );
 </script>
 
 </body>

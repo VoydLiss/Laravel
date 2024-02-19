@@ -8,10 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-  
+  // Admin Form
+	public function index()
+	{
+		$users = User::paginate(20);
+		return view("admin.users.index", compact("users"));
+	}
+
 	public function create()
 	{
-		return view("user.create");
+		return view("admin.users.create");
 	}
 
 	public function store(Request $request)
@@ -29,10 +35,32 @@ class UserController extends Controller
 		]);
 
 		session()->flash("success","Пользователь добавлен");
-		Auth::login($user);
-		return redirect()->home();
+		return redirect()->route('register.index');
 	}
 
+	public function edit($id)
+	{
+		 $user = User::find($id);
+		 return view('admin.users.edit', compact('user'));
+	}
+
+	public function update(Request $request, $id)
+	{
+		$request->validate([
+			'name'=>'required',
+		]);
+		$user = User::find($id);
+		$user->Update($request->all());
+		return redirect()->route('register.index')->with('success','Изменения сохранены');
+	}
+
+	public function show($id)  //!!! ОШИБКА В МАРШРУТАХ (ИСПОЛЬЗУЕТСЯ ВМЕСТО МЕТОДА destroy()) !!!
+	{
+		User::destroy($id);
+		return redirect()->back()->with('success','Пользователь удалён');
+	}
+
+	//  User Form
 	public function loginForm()
 	{
 		$logo = null;
@@ -51,13 +79,13 @@ class UserController extends Controller
 			'name' => $request->name,
 			'password' => $request->password,
 		])){
-			session()->flash('success','Вход выполнен');
+			// session()->flash('success','Вход выполнен');
 			if (Auth::user()->is_admin == 1) {
 				return redirect()->route('admin.index');
 			}	else if (Auth::user()->is_admin == 0){
 				return redirect()->home();
 			}
-			return redirect()->back()->with('error', 'Неправильный логин или пароль');
+			return redirect()->route('logout')->with('error', 'Неправильный логин или пароль');
 		}
 	}
 
