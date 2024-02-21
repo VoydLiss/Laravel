@@ -3,10 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
-// use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\Admin\MainController;
-use App\Http\Controllers\Admin\PostController;
 // use App\Http\Controllers\Admin\CategoryController;
 
 /*
@@ -27,23 +26,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 	Route::resource('/posts', "\App\Http\Controllers\Admin\PostController");
 	Route::resource('/org', "\App\Http\Controllers\Admin\OrgController");
 	Route::resource('/register', "\App\Http\Controllers\UserController");
-
-	// Route::get('/register', [UserController::class,'create'])->name('register.create');
-	// Route::get('/register', [UserController::class,'index'])->name('register.index');
-	// Route::post('/register', [UserController::class,'store'])->name('register.store');
-	// Route::resource('/posts', PostController::class);
 });
 
 Route::group(['middleware' => 'guest'], function(){
 	Route::get('/login',[UserController::class,'loginForm'])->name('login.create');
 	Route::post('/login',[UserController::class,'login'])->name('login');
-
 });
 
 Route::group(['middleware'=> 'auth'], function(){
 	Route::get('/logout',[UserController::class,'logout'])->name('logout');
-	Route::get('/', [ HomeController::class, 'index' ])->name('home');
-	Route::get('/{slug}', [ PageController::class, 'show' ])->name('show');
+	Route::get('/article', [PostController::class, 'show'])->name('posts.single');
+	Route::get('/', [ HomeController::class, 'index'])->name('home');
+	Route::get('/{slug}', [ PageController::class, 'show'])->name('show');
 });
 
-// Route::resource('/posts', PostController::class);

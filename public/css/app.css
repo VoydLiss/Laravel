@@ -7069,6 +7069,11 @@ body input, body textarea {
   margin: auto;
 }
 
+.btn-adm {
+  background: none;
+  border: none;
+}
+
 .btn-usercard {
   margin-block: 5px;
   padding: 4px 6px;
@@ -7090,6 +7095,7 @@ body input, body textarea {
   padding: 3px;
   max-width: 220px;
   margin-block: auto;
+  text-align: center;
   margin-inline: 2px;
   line-height: 15px;
 }

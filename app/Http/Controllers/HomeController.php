@@ -26,12 +26,12 @@ class HomeController extends Controller
 
 		//  $user = User::find($id);
 		$OrgInfo = Org::find(1);
-
 		$UserInfo = [
 			'name'=> Auth::user()->name,//'Фамилия И.О.',
 			'rights'=> !Auth::user()->is_admin ? "" : (Auth::user()->is_admin ? "администратор" : "редактор"),
 		];
+		$BtnUser = !Auth::user()->is_admin ? "#" : (Auth::user()->is_admin ? "admin.index" : "#");
 
-		return view("home", compact('OrgInfo', 'UserInfo'));
+		return view("home", compact('OrgInfo', 'UserInfo', 'BtnUser'));
 	}
 }

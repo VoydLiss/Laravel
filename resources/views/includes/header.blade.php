@@ -43,13 +43,13 @@
 					</nav>
 				</div>
 				<div class="col-12 col-md-3 col-xl-2 d-sm-flex">
-					<div class="top-usercard">
-						<button class="btn-usercard">
+					<form action="{{ $BtnUser }}" class="top-usercard">
+						<div class="btn-usercard">
 							<i class="fa fa-user-circle-o"></i>
-							<div class="card-title">{{ $UserInfo['name'] }} <span class="card-title-sub-editor">{{ $UserInfo['rights'] }}</span></div>
+							<button class="btn-adm" type="submit"> <div class="card-title">{{ $UserInfo['name'] }} <span class="card-title-sub-editor">{{ $UserInfo['rights'] }}</span></div></button>
 							<a href={{ route('logout') }}> <i class="fa fa-sign-out"></i> </a>
-						</button>
-					</div>
+						</div>
+					</from>
 				</div>
 			</div>
 		</div>
