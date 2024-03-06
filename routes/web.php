@@ -35,8 +35,8 @@ Route::group(['middleware' => 'guest'], function(){
 
 Route::group(['middleware'=> 'auth'], function(){
 	Route::get('/logout',[UserController::class,'logout'])->name('logout');
-	Route::get('/article', [PostController::class, 'show'])->name('posts.single');
+	Route::get('/article/{slug}', [PostController::class, 'show'])->name('posts.single');
 	Route::get('/', [ HomeController::class, 'index'])->name('home');
-	Route::get('/{slug}', [ PageController::class, 'show'])->name('show');
+	Route::get('/{slug}', [ HomeController::class, 'show'])->name('show');
 });
 

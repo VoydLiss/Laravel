@@ -24,13 +24,24 @@ class UserController extends Controller
 	{
 		$request->validate([
 			"name"=> "required",
-			"email"=> "email|unique:users",
+			"surname"=> "required",
+			"patronymic"=> "required",
+			"phone"=> "required",
+			"login"=> "unique:users",
+			"email"=> "email",
+			"position"=> "required",
 			"password"=> "required|confirmed",
 		]);
 
 		$user = User::create([
 			"name"=> $request->name,
+			"surname"=> $request->surname,
+			"patronymic"=> $request->patronymic,
+			"phone"=> $request->phone,
+			"login"=> $request->login,
 			"email"=> $request->email,
+			"position"=> $request->position,
+			"is_admin"=> $request->is_admin,
 			"password"=> bcrypt($request->password),
 		]);
 
@@ -54,7 +65,7 @@ class UserController extends Controller
 		return redirect()->route('register.index')->with('success','Изменения сохранены');
 	}
 
-	public function show($id)  //!!! ОШИБКА В МАРШРУТАХ (ИСПОЛЬЗУЕТСЯ ВМЕСТО МЕТОДА destroy()) !!!
+	public function destroy($id) 
 	{
 		User::destroy($id);
 		return redirect()->back()->with('success','Пользователь удалён');

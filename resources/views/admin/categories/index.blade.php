@@ -25,7 +25,7 @@
 				<td>
 					<a href="{{ route('categories.edit', $category->id) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
 					
-					<form action="{{ route('categories.destroy', $category->id) }}" class="float-left">
+					<form action="{{ route('categories.destroy', $category->id) }}" class="float-left" method="POST">
 						@csrf
 						@method('delete')
 						<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">

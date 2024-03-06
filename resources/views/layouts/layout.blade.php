@@ -1,11 +1,13 @@
 @include('includes.header')
 	
 	<section class="section first-section" @if (Request::is('/')) @endif>
+		
 		@if (session()->has('success'))
 			<div class="alert alert-success">
 				{{ session('success') }}
 			</div>
 		@endif
+
 		<div class="container-fluid">
 
 		<div class="row no-gutters g-0">

@@ -8,9 +8,9 @@
 	</div>
 	<!-- /.card-header -->
 	<!-- form start -->
-	<form role="form" method="post" action="{{ route('posts.update', ['post' => $post->id]) }}">
+	<form role="form" enctype="multipart/form-data" method="post" action="{{ route('posts.update', ['post' => $post->id]) }}">
 		@csrf
-		@method('put')
+		@method('PUT')
 		<div class="card-body">
 			<div class="form-group">
 				<label for="title">Название</label>
@@ -33,6 +33,7 @@
 					@endforeach
 				</select>
 			</div>
+
 			<div class="form-group">
 				<label for="thumbnail">Изображение</label>
 				<div class="input-group">

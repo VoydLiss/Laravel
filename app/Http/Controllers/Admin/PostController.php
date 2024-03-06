@@ -85,7 +85,6 @@ class PostController extends Controller
 				'category_id'=>'required|integer',
 				'thumbnail'=>'nullable|image',
 			]);
-
 			$post = Post::find($id);
 			$data = $request->all();
 			$data['thumbnail'] = Post::uploadImage($request, $post->thumbnail);
@@ -103,9 +102,10 @@ class PostController extends Controller
      */
     public function destroy($id) 
     {
-			dd(__METHOD__);
-			Category::destroy($id);
-			return redirect()->route('posts.index')->with('success','Категория удалена');
+			$post = Post::find($id);
+			Storage::delete($post->thumnail);
+			Post::destroy($id);
+      return redirect()->route('posts.index')->with('success','Статья удалена');
     }
 		
 		/**
@@ -114,11 +114,8 @@ class PostController extends Controller
 		 * @param  int  $id
 		 * @return \Illuminate\Http\RedirectResponse
 		 */
-    public function show($id)  //!!! ОШИБКА В МАРШРУТАХ (ИСПОЛЬЗУЕТСЯ ВМЕСТО МЕТОДА destroy()) !!!
+    public function show($id)
     {
-			$post = Post::find($id);
-			Storage::delete($post->thumnail);
-			Post::destroy($id);
-      return redirect()->route('posts.index')->with('success','Статья удалена');
+			//
     }
 }

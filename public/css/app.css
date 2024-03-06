@@ -7069,11 +7069,6 @@ body input, body textarea {
   margin: auto;
 }
 
-.btn-adm {
-  background: none;
-  border: none;
-}
-
 .btn-usercard {
   margin-block: 5px;
   padding: 4px 6px;
@@ -7087,6 +7082,10 @@ body input, body textarea {
   align-items: center;
   max-width: 230px;
   min-height: 45px;
+}
+.btn-usercard .btn-adm {
+  background: none;
+  border: none;
 }
 .btn-usercard .card-title {
   font-size: 15px;
@@ -7207,7 +7206,7 @@ hr {
   font-size: 15px;
   margin-top: 5px;
 }
-.pattern .item-title-content-mini .telephone-usercard {
+.pattern .item-title-content-mini .phone-usercard {
   display: inline-block;
   display: grid;
   margin-top: 10px;

@@ -2,36 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
 use App\Models\Org;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-	public function index()
+
+	function get_info()
 	{
-		// $query = DB::insert("INSERT INTO posts (title. content")
-
-		// $posts = DB::select("SELECT * FROM posts");
-		// return $posts;
-
-		// $post = new Post();
-		// $post->title = "Статья 2";
-		// $post->content = "Lorem ipsum 1";
-		// $post->save();
-
-		// $data = Country::all();
-		// dump("");
-
-		//  $user = User::find($id);
 		$OrgInfo = Org::find(1);
 		$UserInfo = [
 			'name'=> Auth::user()->name,//'Фамилия И.О.',
-			'rights'=> !Auth::user()->is_admin ? "" : (Auth::user()->is_admin ? "администратор" : "редактор"),
+			'rights'=> $this->auth_role("", "администратор", "редактор"),
+			'role'=> $this->auth_role("", "-admin", "-editor"),
 		];
-		$BtnUser = !Auth::user()->is_admin ? "#" : (Auth::user()->is_admin ? "admin.index" : "#");
+		$BtnUser = $this->auth_role("#", "admin.index", "#");
 
-		return view("home", compact('OrgInfo', 'UserInfo', 'BtnUser'));
+		$categories = Category::paginate(20);
+
+		$f = ['OrgInfo' => $OrgInfo, 'UserInfo' => $UserInfo, 'BtnUser' => $BtnUser, 'categories' => $categories];
+
+		return $f;
+	}
+
+	public function index()
+	{
+		// $OrgInfo = Org::find(1);
+		// $UserInfo = [
+		// 	'name'=> Auth::user()->name,//'Фамилия И.О.',
+		// 	'rights'=> $this->auth_role("", "администратор", "редактор"),
+		// 	'role'=> $this->auth_role("", "-admin", "-editor"),
+		// ];
+		// $BtnUser = $this->auth_role("#", "admin.index", "#");
+
+		// $categories = Category::paginate(20);
+
+		$form = $this->get_info();
+
+		$posts = Post::with('category')->orderBy('id', 'desc')->paginate(3);
+		
+		return view("home",compact( 'form', 'posts') );
+	}
+
+	public function show($slug)
+	{
+		$OrgInfo = Org::find(1);
+		$UserInfo = [
+			'name'=> Auth::user()->name,//Фамилия И.О.
+			'rights'=> $this->auth_role("", "администратор", "редактор"),
+			'role'=> $this->auth_role("", "-admin", "-editor"),
+		];
+		$BtnUser = $this->auth_role("#", "admin.index", "#");
+
+		$categories = Category::paginate(20);
+		$users = User::paginate(20);
+
+		return view("$slug", compact('OrgInfo', 'UserInfo', 'BtnUser', 'users', 'categories'));
+	}
+
+	function auth_role($usr, $adm, $edr)
+	{
+		return !Auth::user()->is_admin ? $usr : (Auth::user()->is_admin ? $adm : $edr);
 	}
 }

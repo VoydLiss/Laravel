@@ -82,9 +82,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-			dd(__METHOD__);
-			Category::destroy($id);
-			return redirect()->route('categories.index')->with('success','Категория удалена');
+			$category = Category::find($id);
+			if($category->posts->count()) {
+				return redirect()->route('categories.index')->with('error', 'У категории есть записи');
+			}
+			$category->delete();
+      return redirect()->route('categories.index')->with('success','Категория удалена');
     }
 		
 		/**
@@ -93,9 +96,8 @@ class CategoryController extends Controller
 		 * @param  int  $id
 		 * @return \Illuminate\Http\RedirectResponse
 		 */
-    public function show($id)  //!!! ОШИБКА В МАРШРУТАХ (ИСПОЛЬЗУЕТСЯ ВМЕСТО МЕТОДА destroy()) !!!
+    public function show($id)
     {
-			Category::destroy($id);
-      return redirect()->route('categories.index')->with('success','Категория удалена');
+			//
     }
 }

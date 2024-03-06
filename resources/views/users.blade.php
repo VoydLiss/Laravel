@@ -20,15 +20,19 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th>Отделы</th>
+							<th>Пользователь</th>
+							<th>Почта</th>
 						</tr>
 					</thead>
 					<tbody>
 						
-						@foreach ($categories as $category)
+						@foreach ($users as $user)
+						@if ($user->name != 'admin')
 						<tr>
-							<td>{{ $category->title }}</td>
+							<td>{{ $user->name }}</td>
+							<td>{{ $user->email }}</td>
 						</tr>
+						@endif
 						@endforeach
 				
 					</tbody>

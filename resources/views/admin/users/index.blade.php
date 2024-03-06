@@ -26,7 +26,7 @@
 				<td>
 					<a href="{{ route('register.edit', $user->id) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
 					
-					<form action="{{ route('register.destroy', $user->id) }}" class="float-left">
+					<form action="{{ route('register.destroy', $user->id) }}" class="float-left" method="POST">
 						@csrf
 						@method('delete')
 						<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
