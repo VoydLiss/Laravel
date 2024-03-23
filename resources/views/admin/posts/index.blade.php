@@ -1,9 +1,10 @@
 @extends('admin.index')
 
-@section('categories')
+@section('posts')
 
 <div class="card-body">
-	<a href="{{ route('posts.create') }}" class="btn btn-primary md-3">Добавить статью</a>
+	{{-- <a href="{{ route('posts.create') }}" class="btn btn-primary md-3">Добавить статью</a> --}}
+	<a href="{{ route('posts.create', ['prefix' => $form['UserInfo']['role']])}}" class="btn btn-primary md-3">Добавить статью</a>
 
 	@if ($posts->count())
 	<table class="table table-bordered">
@@ -19,15 +20,16 @@
 		<tbody>
 			
 			@foreach ($posts as $post)
+			@if ($post->category_id != $form['UserInfo']['user']->department && $form['UserInfo']['user']->login != 'admin') @continue @endif
 			<tr>
 				<td>{{ $post->id }}</td>
 				<td>{{ $post->title }}</td>
 				<td>{{ $post->category->title }}</td>
 				<td>{{ $post->created_at }}</td>
 				<td>
-					<a href="{{ route('posts.edit', $post->id) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
+					<a href="{{ route('posts.edit',['prefix' => $form['UserInfo']['role'], $post->id]) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
 					
-					<form action="{{ route('posts.destroy', $post->id) }}" class="float-left" method="POST">
+					<form action="{{ route('posts.destroy', ['prefix' => $form['UserInfo']['role'], $post->id]) }}" class="float-left" method="POST">
 						@csrf
 						@method('delete')
 						<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">

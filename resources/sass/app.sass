@@ -21,11 +21,13 @@ body
 		border: #666 1px solid
 		outline: none
 
+.width
+	width: 100%
+
 #auth-form
 	width: 1000px
 	height: 500px
 	margin-top: 15vh
-	// background: $blue
 	background: linear-gradient(to bottom right, #7485c1 50%, $blue 50%)//#96a3d1
 	border-radius: 0 100px
 	overflow: hidden
@@ -40,7 +42,6 @@ body
 		.fa-sign-in
 			font-size: 175px
 			position: relative
-			// opacity: 48%
 			color: #ffdfdf
 
 	&-circle
@@ -207,7 +208,6 @@ body
 	line-height: normal
 	display: flex
 	align-items: center
-	max-width: 230px
 	min-height: 45px
 	.btn-adm
 		background: none
@@ -241,12 +241,6 @@ body
 		flex: 1
 		margin-block: auto
 		margin-inline: 4px
-	// .text-left
-	// 	display: inline-block
-	// 	width: max-content
-	// 	vertical-align: top
-	// 	text-align: left
-	// 	margin-right: 10px
 	.card-text
 		display: inline-block
 		flex: 1
@@ -254,6 +248,26 @@ body
 		color: #3F61D1
 		font-weight: bold
 
+.second-line
+	background-color: #6d7ba7
+	position: relative
+	height: 50px
+	width: 55%
+	margin: auto
+	border-radius: 0 0 20px 20px
+	a 
+		text-decoration: none
+		color: #fff
+		&:hover
+			text-decoration: none
+			color: #fff
+
+	.row-center
+		justify-content: center
+	.title
+		text-align: center
+		margin: auto
+		text-transform: uppercase
 		
 section
 	padding:
@@ -282,7 +296,7 @@ hr
 	padding:
 		top: $gutter
 
-.first-section
+// .first-section
 
 .pattern
 	position: relative
@@ -352,11 +366,28 @@ hr
 		hr
 			color: $darkened-blue
 
-		.fa-circle-o
-			flex: 1
+		.fa-circle
 			font-size: 17px
 			margin-inline: 10px
-			color: #e0e0e0
+			top: 6px
+
+			&-o
+				font-size: 17px
+				margin-inline: 10px
+				color: #e0e0e0
+
+		.text
+			font-size: 12px
+			position: relative
+			font-weight: bold
+
+		.box
+			&-usercard
+				display: flex
+				justify-content: center
+			&-wrap
+				display: inline-flex
+				flex-direction: column
 		
 .item-social
 	.item-comments

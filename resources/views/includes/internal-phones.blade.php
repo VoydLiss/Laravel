@@ -3,20 +3,17 @@
 		<div class="header-item">Внутренние телефоны</div>
 		<hr>
 		<form>
-			<div class="phone-usercard">
-				<button class="btn-usercard">
-					<div class="card-title"> 1 каб.: 101</div> 
-					<div class="card-text">Название, если вдруг длинное название</div>
-				</button>
-				<button class="btn-usercard">
-					<div class="card-title"> 2 каб.: 102</div> 
-					<div class="card-text">Кабинет</div>
-				</button>
-				<button class="btn-usercard">
-					<div class="card-title"> 3 каб.: 103</div> 
-					<div class="card-text">Длинноеназвание</div>
-				</button>
-			</div>
+
+			@foreach ($form['offices'] as $office)
+				<div class="phone-usercard">
+					<button class="btn-usercard">
+						<div class="card-title"> {{ $office->office_num }} каб.: {{$office->office}} <br>
+							<span class="card-title-sub">{{ $office->phone }}</span>
+						</div>
+					</button>
+				</div>
+			@endforeach
+
 		</form>
 		
 		<form>

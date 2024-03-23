@@ -4,7 +4,7 @@
 
 <div class="card card-primary">
 	<div class="card-header">
-		<h3 class="card-title">Категория "{{ $category->title }}"</h3>
+		<h3 class="card-title">Отдел "{{ $category->title }}"</h3>
 	</div>
 	<!-- /.card-header -->
 	<!-- form start -->

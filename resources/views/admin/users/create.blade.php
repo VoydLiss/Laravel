@@ -62,6 +62,14 @@
             </div>
           </div>
         </div>
+				<div class="input-group mb-3">
+					<select name="department" class="form-control @error('department') is-invalid @enderror" id="department">
+						<option>Выбрать отдел</option>
+						@foreach($categories as $k => $v)
+							<option value="{{ $k }}">{{ $v }}</option>
+						@endforeach
+					</select>
+				</div>
         <div class="input-group mb-3">
           <input type="text" name="position" class="form-control" placeholder="Должность" value="{{ old('position') }}">
           <div class="input-group-append">
@@ -71,8 +79,16 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" name="is_admin" class="form-control" placeholder="Роль в системе" value="{{ old('is_admin') }}">
-          <div class="input-group-append">
+          {{-- <input type="text" name="is_admin" class="form-control" placeholder="Роль в системе" value="{{ old('is_admin') }}"> --}}
+
+					<select name="is_admin" class="form-control @error('is_admin') is-invalid @enderror"  id="is_admin">
+						<option value="">Роль в системе</option>
+						@foreach ($role as $v => $r)
+							<option value="{{ $v }}"> {{ $r }} </option>
+						@endforeach
+					</select>
+
+					<div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>

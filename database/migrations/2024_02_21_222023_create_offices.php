@@ -15,9 +15,9 @@ class CreateOffices extends Migration
     {
         Schema::create('offices', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('phone');
-            $table->integer('office_num');
-            $table->string('office');
+            $table->integer('phone')->nullable();
+            $table->string('office_num')->unique();
+            $table->string('office')->nullable();
             $table->timestamps();
         });
     }

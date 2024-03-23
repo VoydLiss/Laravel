@@ -3,25 +3,21 @@
 @section('categories')
 
 <div class="card-body">
-	<a href="{{ route('categories.create') }}" class="btn btn-primary md-3">Добавить категорию</a>
+	<a href="{{ route('categories.create') }}" class="btn btn-primary md-3">Добавить отдел</a>
 
-	@if ($categories->count())
+	@if ($form['categories']->count())
 	<table class="table table-bordered">
 		<thead>
 			<tr>
-				<th style="width: 10px">#</th>
 				<th>Наименование</th>
-				<th>Slug</th>
 				<th style="width: 40px">Управление</th>
 			</tr>
 		</thead>
 		<tbody>
 			
-			@foreach ($categories as $category)
+			@foreach ($form['categories'] as $category)
 			<tr>
-				<td>{{ $category->id }}</td>
 				<td>{{ $category->title }}</td>
-				<td>{{ $category->slug }}</td>
 				<td>
 					<a href="{{ route('categories.edit', $category->id) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
 					
@@ -41,13 +37,13 @@
 	</table>
 	
 	@else
-			<p>Категорий пока нет...</p>
+			<p>Отделы не добавлены...</p>
 	@endif
 
 </div>
 
 <div class="card-footer">
-	{{ $categories->links() }}
+	{{ $form['categories']->links() }}
 </div>
 
 @endsection

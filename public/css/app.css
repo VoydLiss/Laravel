@@ -6876,6 +6876,10 @@ body input, body textarea {
   outline: none;
 }
 
+.width {
+  width: 100%;
+}
+
 #auth-form {
   width: 1000px;
   height: 500px;
@@ -7080,7 +7084,6 @@ body input, body textarea {
   line-height: normal;
   display: flex;
   align-items: center;
-  max-width: 230px;
   min-height: 45px;
 }
 .btn-usercard .btn-adm {
@@ -7125,6 +7128,30 @@ body input, body textarea {
   font-size: 15px;
   color: #3F61D1;
   font-weight: bold;
+}
+
+.second-line {
+  background-color: #6d7ba7;
+  position: relative;
+  height: 50px;
+  width: 55%;
+  margin: auto;
+  border-radius: 0 0 20px 20px;
+}
+.second-line a {
+  text-decoration: none;
+  color: #fff;
+}
+.second-line a:hover {
+  text-decoration: none;
+  color: #fff;
+}
+.second-line .row-center {
+  justify-content: center;
+}
+.second-line .title {
+  text-align: center;
+  margin: auto;
 }
 
 section {
@@ -7225,11 +7252,28 @@ hr {
 .pattern .item-title-content-mini hr {
   color: rgba(104, 125, 192, 0.2745098039);
 }
+.pattern .item-title-content-mini .fa-circle {
+  font-size: 17px;
+  margin-inline: 10px;
+  top: 6px;
+}
 .pattern .item-title-content-mini .fa-circle-o {
-  flex: 1;
   font-size: 17px;
   margin-inline: 10px;
   color: #e0e0e0;
+}
+.pattern .item-title-content-mini .text {
+  font-size: 12px;
+  position: relative;
+  font-weight: bold;
+}
+.pattern .item-title-content-mini .box-usercard {
+  display: flex;
+  justify-content: center;
+}
+.pattern .item-title-content-mini .box-wrap {
+  display: inline-flex;
+  flex-direction: column;
 }
 
 .item-social .item-comments {

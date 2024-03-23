@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ShareInfo;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -15,8 +16,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-			$categories = Category::paginate(20);
-			return view("admin.categories.index", compact("categories"));
+
+			$form = ShareInfo::instance()->get_info();
+
+			// $categories = Category::paginate(20);
+			return view("admin.categories.index", compact( "form"));
     }
 
     /**
@@ -26,7 +30,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-			return view("admin.categories.create");
+			$form = ShareInfo::instance()->get_info();
+
+			return view("admin.categories.create", compact("form"));
     }
 
     /**
@@ -40,6 +46,7 @@ class CategoryController extends Controller
       $request->validate([
 				'title'=>'required',
 			]);
+			
 			Category::create($request->all());
 			return redirect()->route('categories.index')->with('success','Категория добавлена');
     }
@@ -52,8 +59,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-       $category = Category::find($id);
-			 return view('admin.categories.edit', compact('category'));
+			$form = ShareInfo::instance()->get_info();
+
+      $category = Category::find($id);
+			return view('admin.categories.edit', compact('category', 'form'));
     }
 
     /**

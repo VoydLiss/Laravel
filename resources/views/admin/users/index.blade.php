@@ -18,7 +18,7 @@
 		<tbody>
 			
 			@foreach ($users as $user)
-			@if ($user->name != 'admin')
+			@if ($user->login == 'admin') @continue @endif
 			<tr>
 				<td>{{ $user->id }}</td>
 				<td>{{ $user->name }}</td>
@@ -35,7 +35,6 @@
 					</form>
 				</td>
 			</tr>
-			@endif
 			@endforeach
 
 		</tbody>

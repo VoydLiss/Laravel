@@ -3,8 +3,7 @@
 @section('content')
 
 {{-- <h4 class="h-chapter">ПРЕДСТОЯЩИЕ СОБЫТИЯ</h4> --}}
-	@foreach ($posts as $post)
-
+@foreach ($posts as $post)
 		<div class="pattern">
 			<div class="item-title-content-news">
 				<a href="{{ route('posts.single', ['slug'=>$post->slug]) }}" title="">

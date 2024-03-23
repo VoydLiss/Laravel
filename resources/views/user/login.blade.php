@@ -34,7 +34,7 @@
 			<div class="col-xs-12 col-md-12">
 				<div id="auth-form-title">
 					<div href="/" class="name-s">локальная информационная система</div>
-					<div class="name-org"> <img src="{{ $logo }}" alt="" class="img-logo">{{ $nameOrg }}</div>
+					<div class="name-org"> <img src="{{ $logo }}" alt="" class="img-logo">{{ $OrgInfo->name }}</div>
 					<div class="org-title">	Общий заголовок организации</div>
 				</div>
 				<button id="auth-form-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-sign-in"></i></button>
@@ -55,7 +55,7 @@
 					<div class="modal-body">
 						<label for="user_login" class="form-label">Логин</label>
 						{{-- <input type="text" class="form-control mb-3" id="user_login" maxlength="40"> --}}
-						<input type="text" name="name" class="form-control mb-3" placeholder="Имя" id="user_login" value="{{ old('name') }}">
+						<input type="text" name="login" class="form-control mb-3" placeholder="Логин" id="user_login" value="{{ old('login') }}">
 
 						<label for="user_password" class="form-label">Пароль</label>
 						{{-- <input type="password" class="form-control mb-3" id="user_password"> --}}

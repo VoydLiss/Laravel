@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Helpers\ShareInfo;
 
 class MainController extends Controller
 {
-    public function index()
-		{
-			
-			return view('admin.index');
-		}
+
+	public function index()
+	{
+		$form = ShareInfo::instance()->get_info();
+		
+		return view('admin.index',compact('form'));
+	}
 }

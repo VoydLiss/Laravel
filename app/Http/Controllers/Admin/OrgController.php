@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ShareInfo;
 use App\Http\Controllers\Controller;
 use App\Models\Org;
 use Illuminate\Http\Request;
@@ -16,7 +17,10 @@ class OrgController extends Controller
     public function index()
     {
       $org = Org::find(1);
-			return view("admin.org.index", compact("org"));
+
+			$form = ShareInfo::instance()->get_info();
+
+			return view("admin.org.index", compact("org", "form"));
     }
 
     /**
@@ -49,8 +53,10 @@ class OrgController extends Controller
      */
     public function edit($id)
     {
+			$form = ShareInfo::instance()->get_info();
+
 			$org = Org::find($id);
-			return view('admin.org.edit', compact('org'));
+			return view('admin.org.edit', compact('org', 'form'));
     }
 
     /**

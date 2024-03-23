@@ -1,6 +1,6 @@
 @extends('admin.index')
 
-@section('create')
+@section('posts')
 
 <div class="card card-primary">
 	<div class="card-header">
@@ -8,7 +8,7 @@
 	</div>
 	<!-- /.card-header -->
 	<!-- form start -->
-	<form role="form" method="post" action="{{ route('posts.store') }}" enctype="multipart/form-data">
+	<form role="form" method="post" action="{{ route('posts.store', ['prefix' => $form['UserInfo']['role']]) }}" enctype="multipart/form-data">
 		@csrf
 		<div class="card-body">
 			<div class="form-group">
@@ -27,14 +27,27 @@
 			</div>
 
 			<div class="form-group">
-				<label for="category_id">Категория</label>
-				<select name="category_id" class="form-control @error('category_id') is-invalid @enderror" id="category_id">
-					<option>Выбрать категорию...</option>
-					@foreach($categories as $k => $v)
-						<option value="{{ $k }}">{{ $v }}</option>
+				<label for="category_id">Отдел</label>
+				@if ($form['UserInfo']['user']->is_admin == 2) 
+
+					@foreach ($categories as $k => $v)
+						@if($k == $form['UserInfo']['user']->department)
+							<div name="content" class="form-control" id="content" rows="7">{{ $v }}</div>
+						@endif
 					@endforeach
 
-				</select>
+				@else
+					<select name="category_id" class="form-control @error('category_id') is-invalid @enderror" id="category_id">
+
+						<option>...</option>
+						{{-- <option style=" font-style: italic">Указать отдел</option> --}}
+						@foreach($categories as $k => $v)
+							<option value="{{ $k }}">{{ $v }}</option>
+						@endforeach
+
+					</select>
+				@endif
+
 			</div>
 
 			<div class="form-group">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ShareInfo;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
@@ -17,8 +18,11 @@ class PostController extends Controller
      */
     public function index()
     {
+			$form = ShareInfo::instance()->get_info();
+
 			$posts = Post::with('category')->paginate(20);
-			return view("admin.posts.index", compact("posts"));
+
+			return view("admin.posts.index", compact("posts", "form"));
     }
 
     /**
@@ -28,8 +32,11 @@ class PostController extends Controller
      */
     public function create()
     {
+			$form = ShareInfo::instance()->get_info();
+
 			$categories = Category::pluck('title', 'id')->all();
-			return view("admin.posts.create", compact("categories"));
+
+			return view("admin.posts.create", compact("categories", "form"));
     }
 
     /**
@@ -51,9 +58,11 @@ class PostController extends Controller
 			$data = $request->all();
 			$data['thumbnail'] = Post::uploadImage($request);
 
+			$form = ShareInfo::instance()->get_info();
+
 			$post= Post::create($data);
 
-			return redirect()->route('posts.index')->with('success','Статья добавлена');
+			return redirect()->route('posts.index', ['prefix' => $form['UserInfo']['role']])->with('success','Статья добавлена');
     }
 
     /**
@@ -64,9 +73,15 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+			$form = ShareInfo::instance()->get_info();
+
 			$post = Post::find($id);
 			$categories = Category::pluck('title','id')->all();
-			return view('admin.posts.edit', compact('post','categories'));
+
+			$u = $form['UserInfo']['user'];
+			if ($u->department == $post->category_id || $u->is_admin == 1)
+				return view('admin.posts.edit', compact('post','categories', 'form'));
+			else abort(404);
     }
 
     /**
@@ -86,12 +101,17 @@ class PostController extends Controller
 				'thumbnail'=>'nullable|image',
 			]);
 			$post = Post::find($id);
+			$form = ShareInfo::instance()->get_info();
+
+			$u = $form['UserInfo']['user'];
+			if ($u->department != $post->category_id && $u->is_admin != 1) abort(404);
+
 			$data = $request->all();
 			$data['thumbnail'] = Post::uploadImage($request, $post->thumbnail);
 
 			$post->update($data);
 
-			return redirect()->route('posts.index')->with('success','Изменения сохранены');
+			return redirect()->route('posts.index', ['prefix' => $form['UserInfo']['role']])->with('success','Изменения сохранены');
     }
 
     /**
@@ -105,7 +125,10 @@ class PostController extends Controller
 			$post = Post::find($id);
 			Storage::delete($post->thumnail);
 			Post::destroy($id);
-      return redirect()->route('posts.index')->with('success','Статья удалена');
+
+			$form = ShareInfo::instance()->get_info();
+
+      return redirect()->route('posts.index', ['prefix' => $form['UserInfo']['role']])->with('success','Статья удалена');
     }
 		
 		/**

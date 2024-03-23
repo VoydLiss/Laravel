@@ -2,70 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ShareInfo;
 use App\Models\Category;
-use Illuminate\Support\Facades\DB;
 use App\Models\Post;
-use App\Models\Org;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
 
-	function get_info()
-	{
-		$OrgInfo = Org::find(1);
-		$UserInfo = [
-			'name'=> Auth::user()->name,//'Фамилия И.О.',
-			'rights'=> $this->auth_role("", "администратор", "редактор"),
-			'role'=> $this->auth_role("", "-admin", "-editor"),
-		];
-		$BtnUser = $this->auth_role("#", "admin.index", "#");
-
-		$categories = Category::paginate(20);
-
-		$f = ['OrgInfo' => $OrgInfo, 'UserInfo' => $UserInfo, 'BtnUser' => $BtnUser, 'categories' => $categories];
-
-		return $f;
-	}
-
 	public function index()
 	{
-		// $OrgInfo = Org::find(1);
-		// $UserInfo = [
-		// 	'name'=> Auth::user()->name,//'Фамилия И.О.',
-		// 	'rights'=> $this->auth_role("", "администратор", "редактор"),
-		// 	'role'=> $this->auth_role("", "-admin", "-editor"),
-		// ];
-		// $BtnUser = $this->auth_role("#", "admin.index", "#");
+		$form = ShareInfo::instance()->get_info();
+		$posts = Post::with('category')->where('category_id', '0')->orderBy('id', 'desc')->paginate(3);
 
-		// $categories = Category::paginate(20);
-
-		$form = $this->get_info();
-
-		$posts = Post::with('category')->orderBy('id', 'desc')->paginate(3);
-		
 		return view("home",compact( 'form', 'posts') );
 	}
 
 	public function show($slug)
 	{
-		$OrgInfo = Org::find(1);
-		$UserInfo = [
-			'name'=> Auth::user()->name,//Фамилия И.О.
-			'rights'=> $this->auth_role("", "администратор", "редактор"),
-			'role'=> $this->auth_role("", "-admin", "-editor"),
-		];
-		$BtnUser = $this->auth_role("#", "admin.index", "#");
+		$form = ShareInfo::instance()->get_info();
 
-		$categories = Category::paginate(20);
-		$users = User::paginate(20);
-
-		return view("$slug", compact('OrgInfo', 'UserInfo', 'BtnUser', 'users', 'categories'));
+		return view("$slug", compact('form'));
 	}
 
-	function auth_role($usr, $adm, $edr)
+	public function part($slug)
 	{
-		return !Auth::user()->is_admin ? $usr : (Auth::user()->is_admin ? $adm : $edr);
+		$form = ShareInfo::instance()->get_info();
+
+		$category = Category::where('slug', $slug)->firstOrFail();
+		
+		$posts = Post::with('category')
+			->where('category_id', $category->id)
+			->orderBy('id', 'desc')
+			->paginate(3);
+		
+		if (Auth::user()->department == $category->id || Auth::user()->login == 'admin')
+		{
+			return view("departments.posts", compact('form', 'category', 'posts'));
+		}
+		else return view('departments.info', compact('form', 'category'));// view("show", compact('form',));//, ['slug' => 'departments']);
 	}
+
 }

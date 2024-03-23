@@ -1,5 +1,11 @@
+@include('includes.head')
+
+<body>
+
 @include('includes.header')
-	
+
+@yield('header')
+
 	<section class="section first-section" @if (Request::is('/')) @endif>
 		
 		@if (session()->has('success'))
@@ -11,18 +17,19 @@
 		<div class="container-fluid">
 
 		<div class="row no-gutters g-0">
+
 			<div class="col-md-7">
 				
 				@yield('content')
 
 			</div>
 
-			<div class="col-md-4">
+			<aside class="col-md-4">
 
 				@include('includes.internal-phones')				
 				@include('includes.user-information-block')
 				
-			</div>
+			</aside>
 		</div>
 
 		</div>
